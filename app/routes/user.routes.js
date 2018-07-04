@@ -4,6 +4,9 @@ module.exports = (app) => {
     // Create a new note
     app.post('/user', users.create);
 
+    // user login
+    app.post('/userlogin', users.userlogin);
+
     // Retrieve all notes
     app.get('/users', users.findAll);
 

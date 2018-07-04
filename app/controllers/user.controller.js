@@ -31,6 +31,44 @@ exports.create = (req, res) => {
 
 };
 
+
+// user login
+exports.userlogin = (req, res) => {
+    // Validate request
+    if(!req.body.username) {
+        return res.status(400).send({
+            message: "UserName can not be empty"
+        });
+    }
+
+    if(!req.body.password) {
+        return res.status(400).send({
+            message: "Password can not be empty"
+        });
+    }
+
+    User.findOne({mailId:req.body.username,
+  password:req.body.password})
+    .then(user => {
+        if(!user) {
+            return res.status(200).send({
+                message: "User Name and Password is not match"
+            });
+        }
+        res.send(user);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.username
+            });
+        }
+        return res.status(500).send({
+            message: "Error retrieving user with id " + req.params.username
+        });
+    });
+
+};
+
 // Retrieve and return all users from the database.
 exports.findAll = (req, res) => {
     User.find()

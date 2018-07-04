@@ -1,8 +1,10 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var routes = require("./routes/routes.js");
+var cors = require('cors');
 var app = express();
 
+app.use(cors({origin: 'http://localhost:3000'}));
 // Configuring the database
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
